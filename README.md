@@ -53,4 +53,3 @@ pip freeze > requirements.txt
 ---
 
 Created for UTD Hack 2025 - NVIDIA Nemotron Prize Track
-

@@ -19,4 +19,3 @@ Jinja2==2.11.3        # CVE-2024-22195 (CVSS: 6.1) - XSS vulnerability
 Click==7.1.2
 itsdangerous==1.1.0
 MarkupSafe==1.1.1
-
