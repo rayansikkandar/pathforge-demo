@@ -7,7 +7,7 @@ requests==2.25.1      # CVE-2023-32681 (CVSS: 6.1) - Proxy auth leak
 urllib3==1.26.4       # CVE-2023-43804 (CVSS: 5.9) - Cookie leak
 
 # Serialization vulnerabilities
-PyYAML==5.3.1         # CVE-2020-14343 (CVSS: 9.8) - Arbitrary code execution
+PyYAML==5.4.1         # CVE-2020-14343 (CVSS: 9.8) - Arbitrary code execution  # CVE-2020-14343 (CVSS: 9.8) - Arbitrary code execution
 
 # Cryptography issues
 cryptography==3.3.2   # CVE-2023-23931 (CVSS: 6.5) - Cipher weakness
