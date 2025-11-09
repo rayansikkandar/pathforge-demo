@@ -1,27 +1,29 @@
-# Web Framework with known vulnerabilities
-Flask==2.0.1          # CVE-2023-30861 (CVSS: 9.8) - Cookie parsing vulnerability
-Werkzeug==2.0.0       # CVE-2023-25577 (CVSS: 7.5) - Path traversal
+# ReAct Loop Demo - Intentional dependency conflicts
+# This scenario is designed to showcase PatchForge's multi-package update capability
 
-# HTTP Library vulnerabilities
-requests==2.25.1      # CVE-2023-32681 (CVSS: 6.1) - Proxy auth leak
-urllib3==1.26.4       # CVE-2023-43804 (CVSS: 5.9) - Cookie leak
+# Flask ecosystem with known vulnerabilities
+Flask==2.0.1          # CVE-2023-30861 (CVSS: 9.8) - Will upgrade to 2.3.3
+                       # INTENTIONAL: Flask 2.3.3 requires Werkzeug>=2.2.2 and MarkupSafe>=2.1.1
+Werkzeug==2.0.0       # CVE-2023-25577 (CVSS: 7.5) - TOO OLD for Flask 2.3.3
+                       # This will trigger coordinated upgrade in ReAct loop
 
-# Serialization vulnerabilities
-PyYAML==5.3.1         # CVE-2020-14343 (CVSS: 9.8) - Arbitrary code execution
-                        # NOTE: This version has a known conflict with Jinja2==2.11.3
-                        # Upgrading PyYAML requires also upgrading Jinja2 for compatibility
+# INTENTIONAL CONFLICT: MarkupSafe is too old for Flask 2.3.3+
+MarkupSafe==2.0.0     # Flask 2.3.3 requires MarkupSafe>=2.1.1
+                       # This will cause a conflict that triggers multi-package update
 
-# Cryptography issues
-cryptography==3.3.2   # CVE-2023-23931 (CVSS: 6.5) - Cipher weakness
+# Jinja2 also has dependencies on MarkupSafe
+Jinja2==3.0.0         # Should be compatible, but may need update
 
-# Template engine
-Jinja2==2.11.3        # CVE-2024-22195 (CVSS: 6.1) - XSS vulnerability
-                        # NOTE: Older versions conflict with newer PyYAML
+# Other vulnerable packages
+requests==2.25.1      # CVE-2023-32681 (CVSS: 6.1)
+urllib3==1.26.5       # CVE-2023-43804 (CVSS: 5.9)  # CVE-2023-43804 (CVSS: 5.9)
 
-# Other utilities
-Click==7.1.2
-itsdangerous==1.1.0
-MarkupSafe==1.1.1
+# PyYAML for serialization vulnerabilities
+PyYAML==5.3.1         # CVE-2020-14343 (CVSS: 9.8)
 
 # Testing
 pytest>=7.0.0
+
+# DEMO EXPECTATION:
+# Attempt 1: Upgrade Flask 2.0.1 → 2.3.3 → FAIL (Werkzeug 2.0.0 incompatible)
+# Attempt 2: Nemotron refines → Upgrades Flask + Werkzeug + MarkupSafe → PASS ✓
